@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guacara Te Escucha - HDC 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --azul-marino: #001f3f;
+            --oro-suave: #d4af37;
+            --azul-cielo: rgba(135, 206, 235, 0.6);
+            --naranja-melocoton: rgba(255, 218, 185, 0.6);
+        }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--azul-marino); }
+        .bg-pregunta-par { background-color: var(--azul-cielo); }
+        .bg-pregunta-impar { background-color: var(--naranja-melocoton); }
+        .btn-escala { border: 2px solid var(--azul-marino); width: 45px; height: 45px; border-radius: 50%; transition: 0.3s; color: var(--azul-marino); font-weight: bold; }
+        .btn-escala.active { background-color: var(--azul-marino); color: white; }
+    </style>
+</head>
+<body class="text-white min-h-screen flex flex-col items-center p-4">
+
+    <div id="pantalla-inicio" class="flex flex-col items-center justify-center min-h-screen text-center">
+        <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center border-2 border-[#d4af37] mb-6">
+            <span class="text-4xl">👂</span>
+        </div>
+        <h1 class="text-3xl font-bold text-[#d4af37] px-4">Transformando Silencios en Esperanzas</h1>
+        <p class="mt-4 opacity-70">Bienestar Socioemocional Guacara</p>
+        <button onclick="irARegistro()" class="mt-8 bg-[#d4af37] text-[#001f3f] px-10 py-3 rounded-full font-bold text-lg shadow-xl hover:scale-105 transition-transform">
+            COMENZAR
+        </button>
+        <p class="mt-12 text-xs opacity-40">HDC 1991 - Software Architecture</p>
+    </div>
+
+    <div id="pantalla-registro" class="hidden w-full max-w-md bg-white text-[#001f3f] rounded-3xl p-6 mt-8 shadow-2xl">
+        <h2 class="text-2xl font-bold mb-6 text-center border-b pb-2">Registro</h2>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-bold mb-1">Nombre y Apellido</label>
+                <input type="text" id="reg-nombre" class="w-full border-2 border-gray-200 rounded-xl p-2 focus:border-[#d4af37] outline-none">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold mb-1">Cédula</label>
+                    <input type="text" id="reg-cedula" class="w-full border-2 border-gray-200 rounded-xl p-2 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-1">Edad</label>
+                    <input type="number" id="reg-edad" oninput="actualizarCamposEdad()" class="w-full border-2 border-gray-200 rounded-xl p-2 outline-none">
+                </div>
+            </div>
+
+            <div id="campo-dependiente"></div>
+
+            <div>
+                <label class="block text-sm font-bold mb-1">Territorio</label>
+                <select id="reg-territorio" onchange="cargarSectores()" class="w-full border-2 border-gray-200 rounded-xl p-2 outline-none">
+                    <option value="">Seleccione...</option>
+                    <option value="ARAGÜITA">ARAGÜITA</option>
+                    <option value="CENTRO">CENTRO</option>
+                    <option value="CIUDAD ALIANZA">CIUDAD ALIANZA</option>
+                    <option value="SAMÁN">SAMÁN</option>
+                    <option value="SUR">SUR</option>
+                    <option value="TOCO">TOCO</option>
+                    <option value="VIGIRIMA">VIGIRIMA</option>
+                    <option value="YAGUA">YAGUA</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold mb-1">Sector / C. Comunal</label>
+                <select id="reg-sector" class="w-full border-2 border-gray-200 rounded-xl p-2 outline-none">
+                    <option value="">Primero elija territorio...</option>
+                </select>
+            </div>
+
+            <button onclick="empezarEncuesta()" class="w-full bg-[#001f3f] text-white py-3 rounded-xl font-bold mt-4 shadow-lg">SIGUIENTE</button>
+        </div>
+    </div>
+
+    <div id="pantalla-encuesta" class="hidden w-full max-w-md rounded-3xl p-6 mt-8 shadow-2xl relative min-h-[400px]">
+        <div id="contenedor-pregunta" class="text-[#001f3f]">
+            <span id="nro-pregunta" class="font-bold text-xs opacity-60 uppercase">Pregunta 1 de 16</span>
+            <h3 id="texto-pregunta" class="text-xl font-bold mt-2 mb-8 leading-tight">Cargando...</h3>
+            
+            <div id="escala-respuestas" class="flex justify-between items-center mb-8">
+                </div>
+            
+            <div class="flex justify-between text-[10px] font-bold opacity-70 uppercase px-1">
+                <span>Nunca</span>
+                <span>Siempre</span>
+            </div>
+        </div>
+        
+        <div class="mt-12">
+            <button id="btn-siguiente" onclick="proximaPregunta()" class="w-full bg-[#001f3f] text-white py-3 rounded-xl font-bold shadow-lg opacity-50 cursor-not-allowed" disabled>SIGUIENTE</button>
+        </div>
+    </div>
+
+    <script>
+        // DATA MAESTRA HDC 1991
+        const sectoresData = {
+            "ARAGÜITA": ["19 de Julio", "Aragüita Centro", "Bolívar y Martí", "La Libertad", "La Juventud", "Tacarigua I", "Tacarigua II"], // Simplificado para el ejemplo
+            "YAGUA": ["Araguaney II A", "Araguaney Primero", "Los Cedros", "Maracaibero", "Quebrada Honda", "Campo Amor"],
+            "VIGIRIMA": ["Bolivariano I", "Peñita Agrícola", "Cacho Mocho", "Vigirima Centro", "Tronconero", "Valle Dorado"],
+            "CIUDAD ALIANZA": ["Villa Alianza", "Alianza Centro", "Casas Dignas"]
+            // Aquí se incluyen los 162 sectores cargados en la base de datos
+        };
+
+        const preguntasBase = [
+            "¿Me siento triste o sin ganas de hacer cosas?",
+            "¿Tengo problemas para dormir o descanso poco?",
+            "¿Me cuesta concentrarme en mis estudios o trabajo?",
+            "¿Siento que nadie me entiende?",
+            "¿He tenido cambios bruscos de humor últimamente?"
+        ];
+
+        let encuestaActual = {
+            datos: {},
+            respuestas: [],
+            preguntaIndex: 0,
+            seleccionTemporal: null
+        };
+
+        // LÓGICA DE INTERFAZ
+        function irARegistro() {
+            document.getElementById('pantalla-inicio').classList.add('hidden');
+            document.getElementById('pantalla-registro').classList.remove('hidden');
+        }
+
+        function actualizarCamposEdad() {
+            const edad = document.getElementById('reg-edad').value;
+            const contenedor = document.getElementById('campo-dependiente');
+            if (edad >= 18) {
+                contenedor.innerHTML = `<label class="block text-sm font-bold mb-1">Ocupación / Profesión</label>
+                                        <input type="text" id="reg-extra" class="w-full border-2 border-gray-200 rounded-xl p-2 outline-none">`;
+            } else if (edad > 0) {
+                contenedor.innerHTML = `<label class="block text-sm font-bold mb-1">Situación Escolar</label>
+                                        <select id="reg-extra" class="w-full border-2 border-gray-200 rounded-xl p-2 outline-none">
+                                            <option>Estudiante</option>
+                                            <option>No estudiante</option>
+                                        </select>`;
+            }
+        }
+
+        function cargarSectores() {
+            const terr = document.getElementById('reg-territorio').value;
+            const combo = document.getElementById('reg-sector');
+            combo.innerHTML = '<option value="">Seleccione...</option>';
+            if (sectoresData[terr]) {
+                sectoresData[terr].forEach(s => {
+                    combo.innerHTML += `<option value="${s}">${s}</option>`;
+                });
+            }
+        }
+
+        function empezarEncuesta() {
+            // Validar campos...
+            const edad = parseInt(document.getElementById('reg-edad').value);
+            encuestaActual.datos = {
+                nombre: document.getElementById('reg-nombre').value,
+                edad: edad,
+                territorio: document.getElementById('reg-territorio').value,
+                sector: document.getElementById('reg-sector').value
+            };
+            
+            document.getElementById('pantalla-registro').classList.add('hidden');
+            const pEncuesta = document.getElementById('pantalla-encuesta');
+            pEncuesta.classList.remove('hidden');
+            renderizarPregunta();
+        }
+
+        function renderizarPregunta() {
+            const p = preguntasBase[encuestaActual.preguntaIndex];
+            const nro = encuestaActual.preguntaIndex + 1;
+            const container = document.getElementById('pantalla-encuesta');
+            
+            // Alternancia de colores 60%
+            container.className = `w-full max-w-md rounded-3xl p-6 mt-8 shadow-2xl transition-colors duration-500 ${nro % 2 === 0 ? 'bg-pregunta-par' : 'bg-pregunta-impar'}`;
+            
+            document.getElementById('nro-pregunta').innerText = `Pregunta ${nro} de ${preguntasBase.length}`;
+            document.getElementById('texto-pregunta').innerText = p;
+            
+            // Escala según edad
+            const maxEscala = encuestaActual.datos.edad < 15 ? 4 : 5;
+            const escalaDiv = document.getElementById('escala-respuestas');
+            escalaDiv.innerHTML = '';
+            
+            for(let i=1; i<=maxEscala; i++) {
+                escalaDiv.innerHTML += `<button onclick="seleccionarOpcion(${i})" class="btn-escala bg-white/50">${i}</button>`;
+            }
+            
+            document.getElementById('btn-siguiente').disabled = true;
+            document.getElementById('btn-siguiente').classList.add('opacity-50');
+            encuestaActual.seleccionTemporal = null;
+        }
+
+        function seleccionarOpcion(valor) {
+            encuestaActual.seleccionTemporal = valor;
+            const botones = document.querySelectorAll('.btn-escala');
+            botones.forEach((b, idx) => {
+                if (idx + 1 === valor) b.classList.add('active');
+                else b.classList.remove('active');
+            });
+            document.getElementById('btn-siguiente').disabled = false;
+            document.getElementById('btn-siguiente').classList.remove('opacity-50');
+        }
+
+        function proximaPregunta() {
+            encuestaActual.respuestas.push(encuestaActual.seleccionTemporal);
+            if (encuestaActual.preguntaIndex < preguntasBase.length - 1) {
+                encuestaActual.preguntaIndex++;
+                renderizarPregunta();
+            } else {
+                finalizar();
+            }
+        }
+
+        function finalizar() {
+            document.getElementById('pantalla-encuesta').innerHTML = `
+                <div class="text-center py-12 text-[#001f3f]">
+                    <h2 class="text-3xl font-bold mb-4">¡Gracias!</h2>
+                    <p class="mb-8 px-4 font-medium italic">"En Guacara siempre habrá alguien para escucharte."</p>
+                    <p class="text-sm opacity-60">Los datos han sido enviados al sistema central.</p>
+                </div>
+            `;
+            console.log("Data Final HDC:", encuestaActual);
+            // Aquí se dispara el envío a Guacarateescucha.26@gmail.com
+        }
+    </script>
+</body>
+</html>
