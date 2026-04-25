@@ -22,7 +22,6 @@
 
     <div id="splash" class="flex flex-col items-center justify-center text-center w-full max-w-md mx-auto">
         <img src="logo.jpg" alt="Logo Guacara Te Escucha" class="w-48 h-auto mb-6 object-contain drop-shadow-xl mx-auto rounded-full border-4 border-[#d4af37]">
-        
         <h1 class="text-3xl font-bold text-[#d4af37] mb-2 px-4 leading-tight">Transformando Silencios en Esperanzas</h1>
         <p class="text-sm opacity-70 mb-10 px-6">Programa de Bienestar Socioemocional - Guacara</p>
         <button onclick="iniciarRegistro()" class="w-full bg-[#d4af37] text-[#001f3f] px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg">
@@ -35,11 +34,11 @@
         <h2 class="text-2xl font-bold mb-6 text-center border-b pb-2">Registro Ciudadano</h2>
         <div class="space-y-4">
             <input type="text" id="reg-nombre" placeholder="Nombre y Apellido" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
-            
             <input type="text" id="reg-cedula" placeholder="Cédula de Identidad" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
+            <input type="number" id="reg-edad" placeholder="Edad" oninput="actualizarCamposCondicionales()" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
             
-            <input type="number" id="reg-edad" placeholder="Edad" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
-            
+            <div id="contenedor-condicional" class="w-full"></div>
+
             <select id="reg-territorio" onchange="cargarSectores()" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
                 <option value="">Seleccione Territorio...</option>
                 <option value="ARAGÜITA">ARAGÜITA</option>
@@ -51,7 +50,6 @@
                 <option value="VIGIRIMA">VIGIRIMA</option>
                 <option value="YAGUA">YAGUA</option>
             </select>
-
             <select id="reg-sector" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]" disabled>
                 <option value="">Primero elija territorio...</option>
             </select>
@@ -62,18 +60,15 @@
     <div id="encuesta" class="hidden w-full max-w-lg rounded-3xl p-6 shadow-2xl text-[#001f3f] transition-colors duration-500">
         <span id="nro-pregunta" class="text-xs font-bold opacity-60 uppercase">Pregunta 1</span>
         <h3 id="texto-pregunta" class="text-xl font-bold mt-2 mb-8 min-h-[60px]">Cargando...</h3>
-        
         <div id="escala-respuestas" class="flex justify-between mb-8 px-2"></div>
         <div class="flex justify-between px-2 text-[10px] font-bold opacity-70 uppercase mb-10">
             <span>Nunca</span>
             <span id="label-siempre">Siempre</span>
         </div>
-
         <div id="seccion-comentario" class="hidden">
             <h4 class="font-bold mb-2">Comentarios finales y derivación:</h4>
             <textarea id="comentario-final" class="w-full border-2 border-gray-200 rounded-2xl p-4 h-32 outline-none focus:border-[#001f3f]" placeholder="Escriba aquí su observación libre..."></textarea>
         </div>
-
         <div class="flex gap-2">
             <button id="btn-anterior" onclick="preguntaAnterior()" class="hidden w-1/3 bg-gray-200 py-3 rounded-xl font-bold hover:bg-gray-300">ANTERIOR</button>
             <button id="btn-siguiente" onclick="proximaPregunta()" class="w-full bg-[#001f3f] text-white py-3 rounded-xl font-bold shadow-lg">SIGUIENTE</button>
@@ -83,11 +78,9 @@
     <div id="gracias" class="hidden text-center text-white p-8">
         <h1 class="text-5xl font-bold text-[#d4af37] mb-6">¡Gracias!</h1>
         <p class="text-xl italic px-4">"En Guacara siempre habrá alguien para escucharte."</p>
-        <p class="mt-8 opacity-60">Sus datos han sido procesados correctamente.</p>
     </div>
 
     <script>
-        // DATA DE TERRITORIOS Y SECTORES
         const sectoresData = {
             "ARAGÜITA": ["19 de Julio", "Aragüita Centro", "Aragüita I", "Aragüita II", "Bolívar y Martí", "Bosque de Aragüita", "Caraquita", "Ciudad de Dios", "El Toquito", "La Juventud", "La Libertad", "La Sabanita", "Las Gardenias", "Las Malvinas", "Lomas del Hipódromo", "Los Girasoles", "Los Mangos", "Los Naranjos", "Nueva Guacara", "Parque Aragüita", "Praderas de Guacara", "Residencias Aragüita", "Tacarigua I", "Tacarigua II", "Tierras Blancas", "Villa de Dios"],
             "CENTRO": ["Alí Primera", "Augusto Malavé Villalba", "Bello Monte", "Centro I", "Centro II", "Corazón de Jesús", "El Carmen", "La Coromoto", "La Esperanza", "La Florida", "La Placerita", "Las Flores", "Los Apamates", "San Rafael", "Zona Industrial"],
@@ -100,17 +93,36 @@
         };
 
         const preguntasSets = {
-            jovenes_menores: ["¿1.Me siento triste sin saber por qué?", "¿2.Me enojo con facilidad?", "¿3.Me siento sin energía?", "¿4.Siento que nada me sale bien?", "¿5.Me siento excluido(a).?", "¿6.Evito hablar con mis compañeros?", "¿7.Me cuesta hacer amigos?", "¿8.Siento que no encajo?", "¿9.Me cuesta concentrarme?", "¿10.Mis notas han bajado?", "¿11.SMe siento nervioso(a) en la escuela.?", "¿12.En casa puedo hablar de mis problemas?", "¿13.Siento que mis emociones molestan?", "¿14.Me siento solo(a) incluso acompañado(a).?", "¿15.Me siento solo(a) incluso acompañado(a).?"], // 12-14 años (Escala 1 al 4)
-            jovenes_mayores: ["¿1.Tengo cambios de ánimo fuertes?", "¿2.Me siento desconectado(a).?", "¿3.Ya no disfruto actividades?", "¿4.Me siento abrumado(a).?", "¿5.Prefiero estar solo(a).?", "¿6.Siento que no tengo a quién acudir?", "¿7.Me cuesta confiar en otros?", "¿8.He perdido interés en mis estudios?", "¿9.Me cuesta concentrarme?", "¿10.Me siento presionado(a).?", "¿11.Siento que en casa no me entienden?", "¿12.Evito hablar de mis emociones?", "¿13.Me siento tenso(a) en mi hogar?", "¿14.Me cuesta expresar lo que siento?", "¿15.Me irrito con facilidad?", "¿16.He cambiado mis hábitos de sueño o alimentación?"], // 15-17 años (Escala 1 al 5)
-            adulto: ["¿1.Presento cambios de ánimo drásticos o irritabilidad sin causa aparente?", "¿2.Me siento abrumado(a) por las responsabilidades diarias?", "¿3.He perdido el interés por actividades que antes disfrutaba?", "¿4.Me siento desconectado(a) de mis propias emociones o del entorno?", "¿5.Tiendo a aislarme y evitar el contacto con amigos o colegas?", "¿6.Siento que no cuento con una red de apoyo confiable en momentos críticos?", "¿7.Me cuesta confiar en las intenciones de los demás?", "¿8.Me cuesta concentrarme o tomar decisiones en mis tareas principales?", "¿9.Siento que mi productividad o rendimiento ha disminuido notablemente?", "¿10.Me siento bajo una presión constante que no logro gestionar?", "¿11.Siento que en mi entorno familiar no comprenden mi situación actual?", "¿12.Evito comunicar mis preocupaciones económicas o personales en casa?", "¿13.Percibo un ambiente de tensión o conflicto constante en mi hogar?", "¿14.Presento dificultades significativas para conciliar el sueño o cambios en mi apetito?", "¿15.Me cuesta controlar impulsos o reacciones de enojo?", "¿16.Siento una fatiga persistente o falta de energía vital?"] // 18+ años (Escala 1 al 5)
+            jovenes_menores: ["¿1.Me siento triste sin saber por qué?", "¿2.Me enojo con facilidad?", "¿3.Me siento sin energía?", "¿4.Siento que nada me sale bien?", "¿5.Me siento excluido(a)?", "¿6.Evito hablar con mis compañeros?", "¿7.Me cuesta hacer amigos?", "¿8.Siento que no encajo?", "¿9.Me cuesta concentrarme?", "¿10.Mis notas han bajado?", "¿11.Me siento nervioso(a) en la escuela?", "¿12.En casa puedo hablar de mis problemas?", "¿13.Siento que mis emociones molestan?", "¿14.Me siento solo(a) incluso acompañado(a)?", "¿15.He tenido cambios en mis ganas de comer o dormir?"],
+            jovenes_mayores: ["¿1.Tengo cambios de ánimo fuertes?", "¿2.Me siento desconectado(a)?", "¿3.Ya no disfruto actividades?", "¿4.Me siento abrumado(a)?", "¿5.Prefiero estar solo(a)?", "¿6.Siento que no tengo a quién acudir?", "¿7.Me cuesta confiar en otros?", "¿8.He perdido interés en mis estudios?", "¿9.Me cuesta concentrarme?", "¿10.Me siento presionado(a)?", "¿11.Siento que en casa no me entienden?", "¿12.Evito hablar de mis emociones?", "¿13.Me siento tenso(a) en mi hogar?", "¿14.Me cuesta expresar lo que siento?", "¿15.Me irrito con facilidad?", "¿16.He cambiado mis hábitos de sueño o alimentación?"],
+            adulto: ["¿1.Presento cambios de ánimo drásticos o irritabilidad sin causa aparente?", "¿2.Me siento abrumado(a) por las responsabilidades diarias?", "¿3.He perdido el interés por actividades que antes disfrutaba?", "¿4.Me siento desconectado(a) de mis propias emociones o del entorno?", "¿5.Tiendo a aislarme y evitar el contacto con amigos o colegas?", "¿6.Siento que no cuento con una red de apoyo confiable en momentos críticos?", "¿7.Me cuesta confiar en las intenciones de los demás?", "¿8.Me cuesta concentrarme o tomar decisiones en mis tareas principales?", "¿9.Siento que mi productividad o rendimiento ha disminuido notablemente?", "¿10.Me siento bajo una presión constante que no logro gestionar?", "¿11.Siento que en mi entorno familiar no comprenden mi situación actual?", "¿12.Evito comunicar mis preocupaciones económicas o personales en casa?", "¿13.Percibo un ambiente de tensión o conflicto constante en mi hogar?", "¿14.Presento dificultades significativas para conciliar el sueño o cambios en mi apetito?", "¿15.Me cuesta controlar impulsos o reacciones de enojo?", "¿16.Siento una fatiga persistente o falta de energía vital?"]
         };
 
-        // Objeto actualizado con el campo cédula
-        let encuesta = { nombre: "", cedula: "", edad: 0, territorio: "", sector: "", respuestas: [], index: 0, preguntas: [] };
+        let encuesta = { nombre: "", cedula: "", edad: 0, condicionOcupacion: "", territorio: "", sector: "", respuestas: [], index: 0, preguntas: [] };
 
         function iniciarRegistro() {
             document.getElementById('splash').classList.add('hidden');
             document.getElementById('registro').classList.remove('hidden');
+        }
+
+        // LÓGICA DINÁMICA DE CAMPOS SEGÚN LA EDAD
+        function actualizarCamposCondicionales() {
+            const edad = parseInt(document.getElementById('reg-edad').value);
+            const contenedor = document.getElementById('contenedor-condicional');
+            
+            if (edad >= 12 && edad <= 17) {
+                contenedor.innerHTML = `
+                    <select id="reg-condicion" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
+                        <option value="">¿Es estudiante?</option>
+                        <option value="Estudiante">Sí, soy estudiante</option>
+                        <option value="No estudiante">No estudio actualmente</option>
+                    </select>`;
+            } else if (edad >= 18) {
+                contenedor.innerHTML = `
+                    <input type="text" id="reg-condicion" placeholder="Profesión u Oficio" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">`;
+            } else {
+                contenedor.innerHTML = "";
+            }
         }
 
         function cargarSectores() {
@@ -129,17 +141,18 @@
 
         function empezarEncuesta() {
             encuesta.nombre = document.getElementById('reg-nombre').value.trim();
-            encuesta.cedula = document.getElementById('reg-cedula').value.trim(); // Se captura la cédula
+            encuesta.cedula = document.getElementById('reg-cedula').value.trim();
             encuesta.edad = parseInt(document.getElementById('reg-edad').value);
             encuesta.territorio = document.getElementById('reg-territorio').value;
             encuesta.sector = document.getElementById('reg-sector').value;
+            
+            const campoCondicion = document.getElementById('reg-condicion');
+            encuesta.condicionOcupacion = campoCondicion ? campoCondicion.value : "";
 
-            // Validación incluyendo cédula
-            if (!encuesta.nombre || !encuesta.cedula || !encuesta.edad || !encuesta.sector) {
-                return alert("Por favor, complete todos los campos, incluyendo la Cédula de Identidad.");
+            if (!encuesta.nombre || !encuesta.cedula || !encuesta.edad || !encuesta.sector || !encuesta.condicionOcupacion) {
+                return alert("Por favor, complete todos los campos.");
             }
 
-            // Asignación de Gamas de Preguntas según la edad
             if (encuesta.edad >= 12 && encuesta.edad <= 14) {
                 encuesta.preguntas = preguntasSets.jovenes_menores;
             } else if (encuesta.edad >= 15 && encuesta.edad <= 17) {
@@ -157,8 +170,6 @@
             const container = document.getElementById('encuesta');
             const index = encuesta.index;
             const total = encuesta.preguntas.length;
-            
-            // Regla de escala: Menor de 15 = 4. Mayor o igual a 15 = 5.
             const maxEscala = encuesta.edad < 15 ? 4 : 5;
 
             container.className = `w-full max-w-lg rounded-3xl p-6 shadow-2xl text-[#001f3f] transition-colors duration-500 ${(index + 1) % 2 === 0 ? 'bg-pregunta-par' : 'bg-pregunta-impar'}`;
@@ -177,9 +188,7 @@
                     </div>
                 `;
             }
-
             document.getElementById('btn-anterior').classList.toggle('hidden', index === 0);
-            
             const esUltima = index === total - 1;
             document.getElementById('btn-siguiente').innerText = esUltima ? "ENVIAR" : "SIGUIENTE";
             document.getElementById('seccion-comentario').classList.toggle('hidden', !esUltima);
@@ -187,15 +196,14 @@
 
         function proximaPregunta() {
             const seleccion = document.querySelector('input[name="p"]:checked');
-            if (!seleccion) return alert("Por favor seleccione una opción para poder avanzar.");
-
+            if (!seleccion) return alert("Por favor seleccione una opción.");
             encuesta.respuestas[encuesta.index] = seleccion.value;
 
             if (encuesta.index < encuesta.preguntas.length - 1) {
                 encuesta.index++;
                 renderizarPregunta();
             } else {
-                if (!document.getElementById('comentario-final').value.trim()) return alert("El comentario final de derivación es obligatorio.");
+                if (!document.getElementById('comentario-final').value.trim()) return alert("El comentario final es obligatorio.");
                 enviar();
             }
         }
@@ -212,8 +220,8 @@
             document.getElementById('encuesta').classList.add('hidden');
             document.getElementById('gracias').classList.remove('hidden');
             
-            // Aquí puedes ver cómo se empaquetan los datos, incluyendo la cédula
-            console.log("HDC 2026 - Reporte Consolidado:", encuesta);
+            // LOG PARA VER LOS DATOS CONSOLIDADOS (ESTO IRÁ AL EXCEL)
+            console.log("HDC 2026 - Datos Listos:", encuesta);
         }
     </script>
 </body>
