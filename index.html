@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guacara Te Escucha - HDC2026</title>
+    <title>Guacara Te Escucha - HDC 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -20,23 +20,27 @@
 </head>
 <body class="text-white min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div id="splash" class="flex flex-col items-center justify-center text-center">
-        <img src="Gemini_Generated_Image_y77m78y77m78y77m.jpg" alt="Logo Guacara Te Escucha" class="w-auto h-56 mb-6 object-contain drop-shadow-xl">
-        <h1 class="text-3xl font-bold text-[#d4af37] mb-2 px-4">Transformando Silencios en Esperanzas</h1>
+    <div id="splash" class="flex flex-col items-center justify-center text-center w-full max-w-md mx-auto">
+        <img src="logo.jpg" alt="Logo Guacara Te Escucha" class="w-48 h-auto mb-6 object-contain drop-shadow-xl mx-auto rounded-full border-4 border-[#d4af37]">
+        
+        <h1 class="text-3xl font-bold text-[#d4af37] mb-2 px-4 leading-tight">Transformando Silencios en Esperanzas</h1>
         <p class="text-sm opacity-70 mb-10 px-6">Programa de Bienestar Socioemocional - Guacara</p>
-        <button onclick="iniciarRegistro()" class="bg-[#d4af37] text-[#001f3f] px-10 py-3 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg">
+        <button onclick="iniciarRegistro()" class="w-full bg-[#d4af37] text-[#001f3f] px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg">
             COMENZAR
         </button>
-        <p class="mt-12 text-xs opacity-50 font-bold">HDC2026 - SISTEMA OPERATIVO</p>
+        <p class="mt-12 text-xs opacity-50 font-bold uppercase tracking-widest">HDC 1991 - Sistema Operativo</p>
     </div>
 
     <div id="registro" class="hidden w-full max-w-md bg-white text-[#001f3f] rounded-3xl p-6 shadow-2xl">
         <h2 class="text-2xl font-bold mb-6 text-center border-b pb-2">Registro Ciudadano</h2>
         <div class="space-y-4">
             <input type="text" id="reg-nombre" placeholder="Nombre y Apellido" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
+            
+            <input type="text" id="reg-cedula" placeholder="Cédula de Identidad" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
+            
             <input type="number" id="reg-edad" placeholder="Edad" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
             
-            <select id="reg-territorio" onchange="cargarSectores()" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none">
+            <select id="reg-territorio" onchange="cargarSectores()" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
                 <option value="">Seleccione Territorio...</option>
                 <option value="ARAGÜITA">ARAGÜITA</option>
                 <option value="CENTRO">CENTRO</option>
@@ -48,7 +52,7 @@
                 <option value="YAGUA">YAGUA</option>
             </select>
 
-            <select id="reg-sector" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none" disabled>
+            <select id="reg-sector" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]" disabled>
                 <option value="">Primero elija territorio...</option>
             </select>
         </div>
@@ -71,18 +75,19 @@
         </div>
 
         <div class="flex gap-2">
-            <button id="btn-anterior" onclick="preguntaAnterior()" class="hidden w-1/3 bg-gray-200 py-3 rounded-xl font-bold">ANTERIOR</button>
+            <button id="btn-anterior" onclick="preguntaAnterior()" class="hidden w-1/3 bg-gray-200 py-3 rounded-xl font-bold hover:bg-gray-300">ANTERIOR</button>
             <button id="btn-siguiente" onclick="proximaPregunta()" class="w-full bg-[#001f3f] text-white py-3 rounded-xl font-bold shadow-lg">SIGUIENTE</button>
         </div>
     </div>
 
     <div id="gracias" class="hidden text-center text-white p-8">
         <h1 class="text-5xl font-bold text-[#d4af37] mb-6">¡Gracias!</h1>
-        <p class="text-xl italic">"Transformando Silencios en Esperanzas"</p>
-        <p class="mt-8 opacity-60">Datos enviados a Guacarateescucha.26@gmail.com</p>
+        <p class="text-xl italic px-4">"En Guacara siempre habrá alguien para escucharte."</p>
+        <p class="mt-8 opacity-60">Sus datos han sido procesados correctamente.</p>
     </div>
 
     <script>
+        // DATA DE TERRITORIOS Y SECTORES
         const sectoresData = {
             "ARAGÜITA": ["19 de Julio", "Aragüita Centro", "Aragüita I", "Aragüita II", "Bolívar y Martí", "Bosque de Aragüita", "Caraquita", "Ciudad de Dios", "El Toquito", "La Juventud", "La Libertad", "La Sabanita", "Las Gardenias", "Las Malvinas", "Lomas del Hipódromo", "Los Girasoles", "Los Mangos", "Los Naranjos", "Nueva Guacara", "Parque Aragüita", "Praderas de Guacara", "Residencias Aragüita", "Tacarigua I", "Tacarigua II", "Tierras Blancas", "Villa de Dios"],
             "CENTRO": ["Alí Primera", "Augusto Malavé Villalba", "Bello Monte", "Centro I", "Centro II", "Corazón de Jesús", "El Carmen", "La Coromoto", "La Esperanza", "La Florida", "La Placerita", "Las Flores", "Los Apamates", "San Rafael", "Zona Industrial"],
@@ -95,11 +100,13 @@
         };
 
         const preguntasSets = {
-            joven: ["¿Me siento triste a menudo?", "¿Tengo problemas en la escuela?", "¿Siento que mi familia me apoya?", "¿Tengo amigos de confianza?"],
-            adulto: ["¿Siento estrés laboral?", "¿Tengo estabilidad económica?", "¿Siento que mi comunidad es segura?", "¿Me preocupa el futuro?", "¿He buscado ayuda profesional?", "¿Duermo bien por las noches?"]
+            jovenes_menores: ["¿Sientes presión en la escuela o liceo?", "¿Hablas con tu familia sobre tus problemas?", "¿Tienes amigos en quien confiar?", "¿Te sientes solo o incomprendido?"], // 12-14 años (Escala 1 al 4)
+            jovenes_mayores: ["¿Sientes estrés por tu futuro educativo o laboral?", "¿Tienes amigos en quien confiar?", "¿Cómo manejas el estrés?", "¿Sientes que nadie te entiende?"], // 15-17 años (Escala 1 al 5)
+            adulto: ["¿Siento estrés laboral?", "¿Tengo estabilidad económica?", "¿Siento que mi comunidad es segura?", "¿Me preocupa el futuro?", "¿He buscado ayuda profesional?", "¿Duermo bien por las noches?"] // 18+ años (Escala 1 al 5)
         };
 
-        let encuesta = { nombre: "", edad: 0, territorio: "", sector: "", respuestas: [], index: 0, preguntas: [] };
+        // Objeto actualizado con el campo cédula
+        let encuesta = { nombre: "", cedula: "", edad: 0, territorio: "", sector: "", respuestas: [], index: 0, preguntas: [] };
 
         function iniciarRegistro() {
             document.getElementById('splash').classList.add('hidden');
@@ -121,14 +128,26 @@
         }
 
         function empezarEncuesta() {
-            encuesta.nombre = document.getElementById('reg-nombre').value;
+            encuesta.nombre = document.getElementById('reg-nombre').value.trim();
+            encuesta.cedula = document.getElementById('reg-cedula').value.trim(); // Se captura la cédula
             encuesta.edad = parseInt(document.getElementById('reg-edad').value);
             encuesta.territorio = document.getElementById('reg-territorio').value;
             encuesta.sector = document.getElementById('reg-sector').value;
 
-            if (!encuesta.nombre || !encuesta.edad || !encuesta.sector) return alert("Complete todos los campos");
+            // Validación incluyendo cédula
+            if (!encuesta.nombre || !encuesta.cedula || !encuesta.edad || !encuesta.sector) {
+                return alert("Por favor, complete todos los campos, incluyendo la Cédula de Identidad.");
+            }
 
-            encuesta.preguntas = encuesta.edad >= 18 ? preguntasSets.adulto : preguntasSets.joven;
+            // Asignación de Gamas de Preguntas según la edad
+            if (encuesta.edad >= 12 && encuesta.edad <= 14) {
+                encuesta.preguntas = preguntasSets.jovenes_menores;
+            } else if (encuesta.edad >= 15 && encuesta.edad <= 17) {
+                encuesta.preguntas = preguntasSets.jovenes_mayores;
+            } else {
+                encuesta.preguntas = preguntasSets.adulto;
+            }
+
             document.getElementById('registro').classList.add('hidden');
             document.getElementById('encuesta').classList.remove('hidden');
             renderizarPregunta();
@@ -138,23 +157,23 @@
             const container = document.getElementById('encuesta');
             const index = encuesta.index;
             const total = encuesta.preguntas.length;
+            
+            // Regla de escala: Menor de 15 = 4. Mayor o igual a 15 = 5.
             const maxEscala = encuesta.edad < 15 ? 4 : 5;
 
-            // Colores alternantes
             container.className = `w-full max-w-lg rounded-3xl p-6 shadow-2xl text-[#001f3f] transition-colors duration-500 ${(index + 1) % 2 === 0 ? 'bg-pregunta-par' : 'bg-pregunta-impar'}`;
             
             document.getElementById('nro-pregunta').innerText = `Pregunta ${index + 1} de ${total}`;
             document.getElementById('texto-pregunta').innerText = encuesta.preguntas[index];
             document.getElementById('label-siempre').innerText = `${maxEscala} Siempre`;
 
-            // Generar escala
             const escalaDiv = document.getElementById('escala-respuestas');
             escalaDiv.innerHTML = '';
             for (let i = 1; i <= maxEscala; i++) {
                 escalaDiv.innerHTML += `
                     <div class="flex flex-col items-center">
                         <input type="radio" name="p" id="r${i}" value="${i}" class="hidden radio-btn" ${encuesta.respuestas[index] == i ? 'checked' : ''}>
-                        <label for="r${i}" class="w-12 h-12 border-2 border-[#001f3f] rounded-full flex items-center justify-center font-bold cursor-pointer hover:bg-[#001f3f] hover:text-white transition-colors">${i}</label>
+                        <label for="r${i}" class="w-12 h-12 border-2 border-[#001f3f] rounded-full flex items-center justify-center font-bold cursor-pointer hover:bg-[#001f3f] hover:text-white transition-colors shadow-sm">${i}</label>
                     </div>
                 `;
             }
@@ -168,7 +187,7 @@
 
         function proximaPregunta() {
             const seleccion = document.querySelector('input[name="p"]:checked');
-            if (!seleccion) return alert("Por favor seleccione una opción");
+            if (!seleccion) return alert("Por favor seleccione una opción para poder avanzar.");
 
             encuesta.respuestas[encuesta.index] = seleccion.value;
 
@@ -176,7 +195,7 @@
                 encuesta.index++;
                 renderizarPregunta();
             } else {
-                if (!document.getElementById('comentario-final').value) return alert("Por favor escriba el comentario de derivación");
+                if (!document.getElementById('comentario-final').value.trim()) return alert("El comentario final de derivación es obligatorio.");
                 enviar();
             }
         }
@@ -189,9 +208,12 @@
         }
 
         function enviar() {
+            encuesta.comentario = document.getElementById('comentario-final').value.trim();
             document.getElementById('encuesta').classList.add('hidden');
             document.getElementById('gracias').classList.remove('hidden');
-            console.log("HDC 2026 - Datos Listos:", encuesta, "Comentario:", document.getElementById('comentario-final').value);
+            
+            // Aquí puedes ver cómo se empaquetan los datos, incluyendo la cédula
+            console.log("HDC 2026 - Reporte Consolidado:", encuesta);
         }
     </script>
 </body>
