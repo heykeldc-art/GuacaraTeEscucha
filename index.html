@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guacara Te Escucha - HDC 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --azul-marino: #001f3f;
+            --oro-suave: #d4af37;
+            --azul-cielo: rgba(135, 206, 235, 0.6);
+            --naranja-melocoton: rgba(255, 218, 185, 0.6);
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-[#001f3f] text-white min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div id="splash" class="text-center animate-pulse">
+        <div class="w-32 h-32 bg-white/10 rounded-full mx-auto mb-6 flex items-center justify-center border-2 border-[#d4af37]">
+            <span class="text-4xl">👂</span>
+        </div>
+        <h1 class="text-3xl font-bold text-[#d4af37] mb-2">Transformando Silencios en Esperanzas</h1>
+        <p class="text-sm opacity-70 mb-8">Programa de Bienestar Socioemocional - Guacara</p>
+        <button onclick="iniciarRegistro()" class="bg-[#d4af37] text-[#001f3f] px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform">
+            COMENZAR
+        </button>
+        <p class="mt-12 text-xs opacity-50">HDC 2026</p>
+    </div>
+
+    <div id="registro" class="hidden w-full max-w-md bg-white text-[#001f3f] rounded-2xl p-6 shadow-2xl">
+        <h2 class="text-xl font-bold mb-4 border-b pb-2">Registro de Ciudadano</h2>
+        <p class="text-sm italic">Motor de datos HDC cargado con éxito...</p>
+        <button class="mt-4 w-full bg-[#001f3f] text-white py-2 rounded">Siguiente</button>
+    </div>
+
+    <script>
+        function iniciarRegistro() {
+            document.getElementById('splash').classList.add('hidden');
+            document.getElementById('registro').classList.remove('hidden');
+            // La lógica de los sectores y alternancia de colores se activa aquí
+        }
+    </script>
+</body>
+</html>
