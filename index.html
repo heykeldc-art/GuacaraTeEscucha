@@ -3,34 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guacara - HDC 2026</title>
+    <title>Bienestar Socioemocional - HDC2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --azul-medianoche: #0D2A47;
             --naranja-vibrante: #EB7524;
-            --dorado-suave: #d4af37;
             --azul-cielo-transparente: rgba(135, 206, 235, 0.4);
             --naranja-suave-transparente: rgba(235, 117, 36, 0.3);
         }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--azul-medianoche); }
         
-        /* Estilo para el "Logo" Guacara */
-        .logo-guacara {
-            font-family: 'Dancing Script', cursive;
-            font-size: 5rem;
-            background: linear-gradient(to bottom, #f1d37e 0%, #d4af37 50%, #8a6e2f 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
-            letter-spacing: -2px;
+        .contenedor-logo-amplo {
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+        }
+        .logo-globo {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0px 0px 15px rgba(255,255,255,0.2)); 
         }
 
         .bg-pregunta-par { background-color: var(--azul-cielo-transparente); }
         .bg-pregunta-impar { background-color: var(--naranja-suave-transparente); }
         
-        /* Botones Naranjas */
         .btn-naranja {
             background-color: var(--naranja-vibrante);
             transition: all 0.3s ease;
@@ -50,19 +50,20 @@
 </head>
 <body class="text-white min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div id="splash" class="flex flex-col items-center justify-center text-center w-full max-w-md mx-auto">
-        <h1 class="logo-guacara mb-2">Guacara</h1>
+    <div id="splash" class="flex flex-col items-center justify-center text-center w-full max-w-lg mx-auto">
+        <div class="contenedor-logo-amplo">
+            <img src="logo-especial.png" alt="Logo" class="logo-globo" onerror="this.src='https://via.placeholder.com/320x180?text=ESPERANDO+LOGO'">
+        </div>
         
-        <h2 class="text-2xl font-bold text-[#EB7524] mb-2 px-4 leading-tight uppercase tracking-tight">
+        <h2 class="text-3xl font-bold text-[#EB7524] mb-2 px-4 leading-tight uppercase tracking-tight">
             Transformando Silencios en Esperanzas
         </h2>
-        <p class="text-sm opacity-80 mb-10 px-6 font-medium">Programa de Bienestar Socioemocional</p>
+        <p class="text-base opacity-80 mb-12 px-6 font-medium">Programa de Bienestar Socioemocional - Guacara</p>
         
-        <button onclick="iniciarRegistro()" class="btn-naranja w-full text-white px-10 py-4 rounded-full font-bold text-xl">
+        <button onclick="iniciarRegistro()" class="btn-naranja w-full max-sm:max-w-xs text-white px-10 py-4 rounded-full font-bold text-xl">
             COMENZAR
         </button>
-        
-        <p class="mt-12 text-xs opacity-50 font-bold uppercase tracking-widest">HDC 1991 - SISTEMA OPERATIVO</p>
+        <p class="mt-16 text-xs opacity-50 font-bold uppercase tracking-widest">HDC 1991 - SISTEMA OPERATIVO</p>
     </div>
 
     <div id="registro" class="hidden w-full max-w-md bg-white text-[#0D2A47] rounded-3xl p-6 shadow-2xl border-t-8 border-[#EB7524]">
@@ -71,9 +72,7 @@
             <input type="text" id="reg-nombre" placeholder="Nombre y Apellido" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50">
             <input type="text" id="reg-cedula" placeholder="Cédula de Identidad" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50">
             <input type="number" id="reg-edad" placeholder="Edad" oninput="actualizarCamposCondicionales()" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50">
-            
             <div id="contenedor-condicional" class="w-full"></div>
-
             <select id="reg-territorio" onchange="cargarSectores()" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50">
                 <option value="">Seleccione Territorio...</option>
                 <option value="ARAGÜITA">ARAGÜITA</option>
@@ -85,7 +84,6 @@
                 <option value="VIGIRIMA">VIGIRIMA</option>
                 <option value="YAGUA">YAGUA</option>
             </select>
-
             <select id="reg-sector" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50" disabled>
                 <option value="">Primero elija territorio...</option>
             </select>
@@ -95,8 +93,7 @@
 
     <div id="encuesta" class="hidden w-full max-w-lg rounded-3xl p-6 shadow-2xl text-white transition-colors duration-500">
         <span id="nro-pregunta" class="text-xs font-bold opacity-70 uppercase tracking-widest">Pregunta 1</span>
-        <h3 id="texto-pregunta" class="text-xl font-bold mt-2 mb-8 min-h-[60px] leading-snug">Cargando...</h3>
-        
+        <h3 id="texto-pregunta" class="text-2xl font-bold mt-2 mb-8 min-h-[60px] leading-snug">Cargando...</h3>
         <div id="escala-respuestas" class="flex justify-between mb-8 px-2"></div>
         <div class="flex justify-between px-2 text-[10px] font-bold opacity-80 uppercase mb-10">
             <span>Nunca</span>
@@ -104,8 +101,8 @@
         </div>
 
         <div id="seccion-comentario" class="hidden mb-6">
-            <h4 class="font-bold mb-2 text-sm uppercase">Comentarios y derivación:</h4>
-            <textarea id="comentario-final" class="w-full bg-white/20 border-2 border-white/30 rounded-2xl p-4 h-32 outline-none focus:border-[#EB7524] text-white placeholder-white/50" placeholder="Escriba aquí su observación libre..."></textarea>
+            <h4 class="font-bold mb-2 text-sm uppercase tracking-wide">Comentario Personal:</h4>
+            <textarea id="comentario-final" class="w-full bg-white/20 border-2 border-white/30 rounded-2xl p-4 h-32 outline-none focus:border-[#EB7524] text-white placeholder-white/50" placeholder="Escriba aquí su mensaje..."></textarea>
         </div>
 
         <div class="flex gap-2">
@@ -114,22 +111,21 @@
         </div>
     </div>
 
-    <div id="gracias" class="hidden text-center p-8">
-        <h1 class="logo-guacara text-6xl mb-6">Guacara</h1>
-        <p class="text-xl italic px-4 font-bold text-[#EB7524]">"Transformando Silencios en Esperanzas"</p>
-        <p class="mt-8 opacity-60 text-sm">Información procesada por HDC 1991</p>
+    <div id="gracias" class="hidden text-center p-8 flex flex-col items-center">
+        <p class="text-2xl italic px-4 font-bold text-[#EB7524]">"Transformando Silencios en Esperanzas"</p>
+        <p class="mt-8 opacity-60 text-sm">Información procesada por HDC2026</p>
     </div>
 
     <script>
         const sectoresData = {
-            "ARAGÜITA": ["19 de Julio", "Aragüita Centro", "Aragüita I", "Aragüita II", "Bolívar y Martí", "Bosque de Aragüita", "Caraquita", "Ciudad de Dios", "El Toquito", "La Juventud", "La Libertad", "La Sabanita", "Las Gardenias", "Las Malvinas", "Lomas del Hipódromo", "Los Girasoles", "Los Mangos", "Los Naranjos", "Nueva Guacara", "Parque Aragüita", "Praderas de Guacara", "Residencias Aragüita", "Tacarigua I", "Tacarigua II", "Tierras Blancas", "Villa de Dios"],
-            "CENTRO": ["Alí Primera", "Augusto Malavé Villalba", "Bello Monte", "Centro I", "Centro II", "Corazón de Jesús", "El Carmen", "La Coromoto", "La Esperanza", "La Florida", "La Placerita", "Las Flores", "Los Apamates", "San Rafael", "Zona Industrial"],
-            "CIUDAD ALIANZA": ["1ra Etapa", "2da Etapa", "3ra Etapa", "4ta Etapa", "5ta Etapa", "Alianza Centro", "Alianza Sur", "Casas Dignas", "El Bosque", "El Parque", "Jardín Alianza", "La Floresta", "La Pradera", "Los Jarales", "Quintas de Alianza", "Valle Dorado", "Villa Alianza"],
-            "SAMÁN": ["El Samán", "El Samán II", "El Samán III", "El Samán IV", "El Samán V", "El Samán VI", "Los Apamates", "Los Helechos", "Los Merecure", "Los Naranjos", "Los Olivos", "Los Pinos", "Los Rosales", "Los Sauces", "Saman Azucena", "Saman Centro", "Saman I", "Saman Sur", "Saman Te Escucha", "Valle de Saman"],
-            "SUR": ["13 de Mayo", "19 de Julio Sur", "4 de Febrero", "Agua Sal", "Bolívar Sur", "Chirgua I", "Chirgua II", "El Libertador", "El Triunfo", "La Lucha", "Los Cardones", "Sueños del Comandante"],
-            "TOCO": ["Altamira", "Callejón El Toco", "Callejón La Línea", "Camino Real", "Cerro El Toco", "El Cardonal", "El Esfuerzo", "El Toco Centro", "El Toco I", "El Toco II", "El Toco III", "El Toco IV", "El Toco Norte", "El Toco Sur", "La Acequia", "La Florida", "La Juventud", "La Paz", "Las Tejas", "Piedras Blancas", "Sinaí"],
-            "VIGIRIMA": ["BATALLA: Bolivariano I", "BATALLA: Bolivariano II", "BATALLA: Peñita Agrícola", "BATALLA: Peñita El Viento", "BATALLA: Brisas del Mayei", "BATALLA: Cacho Mocho", "BATALLA: El Chaparral", "BATALLA: Flor de la Manga", "BATALLA: La Morita", "BATALLA: Vigirima Centro", "PETROGLIFOS: Colinas del Toco", "PETROGLIFOS: Petroglifos Ojo de Agua", "PETROGLIFOS: Tronconero", "PETROGLIFOS: Tronconero Norte", "PETROGLIFOS: Tronconero Sur", "PETROGLIFOS: Diego Ibarra", "PETROGLIFOS: La Compañía", "PETROGLIFOS: Mata Redonda", "PETROGLIFOS: Ramon Cruces", "PETROGLIFOS: Avispero Norte", "PETROGLIFOS: El Sisal", "PETROGLIFOS: La Vecindad", "PETROGLIFOS: Valle Dorado", "PETROGLIFOS: Valles de Vigirima", "PETROGLIFOS: Villas del Toco"],
-            "YAGUA": ["Araguaney II A", "Araguaney II B", "Araguaney Primero", "Los Cedros", "Los Mangos", "San Esteban", "Valles de Yagua", "La Manga", "La Primavera", "Las Malvinas", "Los Almendrones", "Los Naranjos", "Maracaibero", "Quebrada Honda", "El Limon", "El Porvenir", "La Milagrosa", "Las Mandarinas", "Los Girasoles", "Los Merecures", "Saman Azucena", "Campo Amor", "El Cabrito", "El Naranjal"]
+            "ARAGÜITA": ["13 de Mayo", "19 de Julio", "Cacique de Guacara", "Dios Todopoderoso", "El Libertador", "El Milagro", "Ezequiel Zamora", "Guaicaipuro", "Guaicaipuro Bolivariano", "José Gregorio Guitián", "Juventud 1", "Juventud 2", "La Ceiba 2", "La Ceiba 2021", "La Floresta Sur", "La Franja", "Mocundo", "Nuestra Señora de la Coromoto", "Rafael Caldera", "Santa Bárbara 1", "Santa Bárbara 2", "Santa Eduviges", "Simón Bolívar Sur", "Tesoro del Indio Lote 2", "Tesoro del Indio Lote 3", "Tricentenario"],
+            "CENTRO": ["1ero de Mayo", "Casitas de Malavé Villalba", "El Cumbe", "El Placer", "La Coromoto", "La Florida", "La Goajira", "La Tigrera", "Las Casitas San Agustín", "Los Naranjillos", "Malavé Villalba 123", "Malavé Villalba 4567", "Mocundo Centro", "San Agustín", "Urb. Loma Linda"],
+            "CIUDAD ALIANZA": ["1era Etapa 1", "1ra Etapa 2", "2da Etapa", "3ra Etapa", "4F Alianza Gardens", "4ta Etapa A", "4ta Etapa B", "5ta Etapa", "Aguamarina", "Aguasal", "Brisa del Lago", "Conjunto Residencial Villa Alianza II", "José Laurencio Silva", "Prado del Lago", "Villa Alianza 1, Casas Dignas", "Villa Alianza Viviendas Dignas", "Villas del Lago y Río Verde"],
+            "SAMÁN": ["Apamates", "Bosques del Samán", "Ceiba del Samán", "El Prado", "Enmanuel", "Lagunas del Samán", "Los Girasoles del Samán", "Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6", "Sector 7", "Sector 8", "Sector 9", "Sector 10", "Sector 11", "Sector 12", "Villas de Capreminfra"],
+            "SUR": ["Amazonia", "Banco Obrero", "Cristo Salva", "La Lucha", "Lago Jardín", "Libertad 1", "Libertad 2", "Macario Escorcha", "Nueva Guacara", "Turumo 1", "Turumo 2", "Villa Guacara"],
+            "TOCO": ["Cardonal 1", "Cardonal 2", "La Alegría", "La Emboscada", "La Floresta Norte", "Los Caobos", "Los Naranjos Norte", "Negro Primero", "Perrote 1", "Perrote 2", "Perrote 3", "Perrote 4", "San Rafael", "Simón Bolívar Norte", "Toco Norte", "Toquito La Milagrosa", "Urb. La Emboscada", "Urb. Las Brisas", "Valles de Naranjal", "Victoria de Guacara", "Villa Tarento"],
+            "VIGIRIMA": ["Avispero Norte", "Bolivariano I", "Bolivariano II", "Brisas del Mayei", "Cacho Mocho", "Colinas de Tronconero", "Colinas del Toco Ojo de Agua", "Diego Ibarra", "El Chaparral", "El Sisal", "Flor de la Manga", "La Compañía", "La Morita", "La Vecindad", "Mata Redonda", "Peñita Agrícola", "Peñita el Viento", "Petroglifos de Ojo de Agua", "Ramón Cruces", "Tronconero", "Tronconero Norte", "Tronconero Sur", "Valle Dorado", "Valles de Vigirima", "Vigirima Centro", "Villas del Toco"],
+            "YAGUA": ["Araguaney II A", "Araguaney II B", "Araguaney Primero", "Campo Amor", "El Cabrito", "El Limón", "El Naranjal", "El Porvenir", "La Manga", "La Milagrosa", "La Primavera", "Las Malvinas", "Las Mandarinas", "Los Almendrones", "Los Cedros", "Los Girasoles de Yagua", "Los Mangos", "Los Merecures", "Los Naranjos", "Maracaibero", "Quebrada Honda", "Samán Azucena", "San Esteban", "Valles de Yagua"]
         };
 
         const preguntasSets = {
@@ -227,7 +223,7 @@
                 encuesta.index++;
                 renderizarPregunta();
             } else {
-                if (!document.getElementById('comentario-final').value.trim()) return alert("El comentario final es requerido.");
+                if (!document.getElementById('comentario-final').value.trim()) return alert("El comentario personal es obligatorio.");
                 enviar();
             }
         }
@@ -255,7 +251,7 @@
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify(payload)
-            }).then(() => console.log("Datos enviados a HDC 1991")).catch(err => console.error(err));
+            }).then(() => console.log("Datos enviados satisfactoriamente")).catch(err => console.error(err));
         }
     </script>
 </body>
