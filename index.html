@@ -3,43 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guacara Te Escucha - HDC2026</title>
+    <title>Guacara - HDC 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --azul-marino: #001f3f;
-            --oro-suave: #d4af37;
-            --azul-cielo: rgba(135, 206, 235, 0.6);
-            --naranja-melocoton: rgba(255, 218, 185, 0.6);
+            --azul-medianoche: #0D2A47;
+            --naranja-vibrante: #EB7524;
+            --dorado-suave: #d4af37;
+            --azul-cielo-transparente: rgba(135, 206, 235, 0.4);
+            --naranja-suave-transparente: rgba(235, 117, 36, 0.3);
         }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--azul-marino); }
-        .bg-pregunta-par { background-color: var(--azul-cielo); }
-        .bg-pregunta-impar { background-color: var(--naranja-melocoton); }
-        .radio-btn:checked + label { background-color: var(--azul-marino); color: white; border-color: var(--azul-marino); }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--azul-medianoche); }
+        
+        /* Estilo para el "Logo" Guacara */
+        .logo-guacara {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            background: linear-gradient(to bottom, #f1d37e 0%, #d4af37 50%, #8a6e2f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
+            letter-spacing: -2px;
+        }
+
+        .bg-pregunta-par { background-color: var(--azul-cielo-transparente); }
+        .bg-pregunta-impar { background-color: var(--naranja-suave-transparente); }
+        
+        /* Botones Naranjas */
+        .btn-naranja {
+            background-color: var(--naranja-vibrante);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(235, 117, 36, 0.4);
+        }
+        .btn-naranja:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--naranja-vibrante);
+        }
+
+        .radio-btn:checked + label {
+            background-color: var(--naranja-vibrante);
+            color: white;
+            border-color: var(--naranja-vibrante);
+        }
     </style>
 </head>
 <body class="text-white min-h-screen flex flex-col items-center justify-center p-4">
 
     <div id="splash" class="flex flex-col items-center justify-center text-center w-full max-w-md mx-auto">
-        <img src="logo.jpg" alt="Logo Guacara Te Escucha" class="w-48 h-auto mb-6 object-contain drop-shadow-xl mx-auto rounded-full border-4 border-[#d4af37]">
-        <h1 class="text-3xl font-bold text-[#d4af37] mb-2 px-4 leading-tight">Transformando Silencios en Esperanzas</h1>
-        <p class="text-sm opacity-70 mb-10 px-6">Programa de Bienestar Socioemocional - Guacara</p>
-        <button onclick="iniciarRegistro()" class="w-full bg-[#d4af37] text-[#001f3f] px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg">
+        <h1 class="logo-guacara mb-2">Guacara</h1>
+        
+        <h2 class="text-2xl font-bold text-[#EB7524] mb-2 px-4 leading-tight uppercase tracking-tight">
+            Transformando Silencios en Esperanzas
+        </h2>
+        <p class="text-sm opacity-80 mb-10 px-6 font-medium">Programa de Bienestar Socioemocional</p>
+        
+        <button onclick="iniciarRegistro()" class="btn-naranja w-full text-white px-10 py-4 rounded-full font-bold text-xl">
             COMENZAR
         </button>
-        <p class="mt-12 text-xs opacity-50 font-bold uppercase tracking-widest">HDC2026 - Sistema Operativo</p>
+        
+        <p class="mt-12 text-xs opacity-50 font-bold uppercase tracking-widest">HDC 1991 - SISTEMA OPERATIVO</p>
     </div>
 
-    <div id="registro" class="hidden w-full max-w-md bg-white text-[#001f3f] rounded-3xl p-6 shadow-2xl">
+    <div id="registro" class="hidden w-full max-w-md bg-white text-[#0D2A47] rounded-3xl p-6 shadow-2xl border-t-8 border-[#EB7524]">
         <h2 class="text-2xl font-bold mb-6 text-center border-b pb-2">Registro Ciudadano</h2>
         <div class="space-y-4">
-            <input type="text" id="reg-nombre" placeholder="Nombre y Apellido" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
-            <input type="text" id="reg-cedula" placeholder="Cédula de Identidad" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
-            <input type="number" id="reg-edad" placeholder="Edad" oninput="actualizarCamposCondicionales()" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
+            <input type="text" id="reg-nombre" placeholder="Nombre y Apellido" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50">
+            <input type="text" id="reg-cedula" placeholder="Cédula de Identidad" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50">
+            <input type="number" id="reg-edad" placeholder="Edad" oninput="actualizarCamposCondicionales()" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50">
             
             <div id="contenedor-condicional" class="w-full"></div>
 
-            <select id="reg-territorio" onchange="cargarSectores()" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
+            <select id="reg-territorio" onchange="cargarSectores()" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50">
                 <option value="">Seleccione Territorio...</option>
                 <option value="ARAGÜITA">ARAGÜITA</option>
                 <option value="CENTRO">CENTRO</option>
@@ -50,34 +85,39 @@
                 <option value="VIGIRIMA">VIGIRIMA</option>
                 <option value="YAGUA">YAGUA</option>
             </select>
-            <select id="reg-sector" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]" disabled>
+
+            <select id="reg-sector" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50" disabled>
                 <option value="">Primero elija territorio...</option>
             </select>
         </div>
-        <button onclick="empezarEncuesta()" class="mt-8 w-full bg-[#001f3f] text-white py-4 rounded-2xl font-bold text-lg shadow-lg">SIGUIENTE</button>
+        <button onclick="empezarEncuesta()" class="btn-naranja mt-8 w-full text-white py-4 rounded-2xl font-bold text-lg">SIGUIENTE</button>
     </div>
 
-    <div id="encuesta" class="hidden w-full max-w-lg rounded-3xl p-6 shadow-2xl text-[#001f3f] transition-colors duration-500">
-        <span id="nro-pregunta" class="text-xs font-bold opacity-60 uppercase">Pregunta 1</span>
-        <h3 id="texto-pregunta" class="text-xl font-bold mt-2 mb-8 min-h-[60px]">Cargando...</h3>
+    <div id="encuesta" class="hidden w-full max-w-lg rounded-3xl p-6 shadow-2xl text-white transition-colors duration-500">
+        <span id="nro-pregunta" class="text-xs font-bold opacity-70 uppercase tracking-widest">Pregunta 1</span>
+        <h3 id="texto-pregunta" class="text-xl font-bold mt-2 mb-8 min-h-[60px] leading-snug">Cargando...</h3>
+        
         <div id="escala-respuestas" class="flex justify-between mb-8 px-2"></div>
-        <div class="flex justify-between px-2 text-[10px] font-bold opacity-70 uppercase mb-10">
+        <div class="flex justify-between px-2 text-[10px] font-bold opacity-80 uppercase mb-10">
             <span>Nunca</span>
             <span id="label-siempre">Siempre</span>
         </div>
-        <div id="seccion-comentario" class="hidden">
-            <h4 class="font-bold mb-2">Comentarios finales y derivación:</h4>
-            <textarea id="comentario-final" class="w-full border-2 border-gray-200 rounded-2xl p-4 h-32 outline-none focus:border-[#001f3f]" placeholder="Escriba aquí su observación libre..."></textarea>
+
+        <div id="seccion-comentario" class="hidden mb-6">
+            <h4 class="font-bold mb-2 text-sm uppercase">Comentarios y derivación:</h4>
+            <textarea id="comentario-final" class="w-full bg-white/20 border-2 border-white/30 rounded-2xl p-4 h-32 outline-none focus:border-[#EB7524] text-white placeholder-white/50" placeholder="Escriba aquí su observación libre..."></textarea>
         </div>
+
         <div class="flex gap-2">
-            <button id="btn-anterior" onclick="preguntaAnterior()" class="hidden w-1/3 bg-gray-200 py-3 rounded-xl font-bold hover:bg-gray-300">ANTERIOR</button>
-            <button id="btn-siguiente" onclick="proximaPregunta()" class="w-full bg-[#001f3f] text-white py-3 rounded-xl font-bold shadow-lg">SIGUIENTE</button>
+            <button id="btn-anterior" onclick="preguntaAnterior()" class="hidden w-1/3 bg-white/10 py-3 rounded-xl font-bold hover:bg-white/20">ATRÁS</button>
+            <button id="btn-siguiente" onclick="proximaPregunta()" class="btn-naranja w-full text-white py-4 rounded-xl font-bold shadow-lg uppercase tracking-wider">SIGUIENTE</button>
         </div>
     </div>
 
-    <div id="gracias" class="hidden text-center text-white p-8">
-        <h1 class="text-5xl font-bold text-[#d4af37] mb-6">¡Gracias!</h1>
-        <p class="text-xl italic px-4">"En Guacara siempre habrá alguien para escucharte."</p>
+    <div id="gracias" class="hidden text-center p-8">
+        <h1 class="logo-guacara text-6xl mb-6">Guacara</h1>
+        <p class="text-xl italic px-4 font-bold text-[#EB7524]">"Transformando Silencios en Esperanzas"</p>
+        <p class="mt-8 opacity-60 text-sm">Información procesada por HDC 1991</p>
     </div>
 
     <script>
@@ -93,36 +133,32 @@
         };
 
         const preguntasSets = {
-            jovenes_menores: ["¿1.Me siento triste sin saber por qué?", "¿2.Me enojo con facilidad?", "¿3.Me siento sin energía?", "¿4.Siento que nada me sale bien?", "¿5.Me siento excluido(a)?", "¿6.Evito hablar con mis compañeros?", "¿7.Me cuesta hacer amigos?", "¿8.Siento que no encajo?", "¿9.Me cuesta concentrarme?", "¿10.Mis notas han bajado?", "¿11.Me siento nervioso(a) en la escuela?", "¿12.En casa puedo hablar de mis problemas?", "¿13.Siento que mis emociones molestan?", "¿14.Me siento solo(a) incluso acompañado(a)?", "¿15.He tenido cambios en mis ganas de comer o dormir?"],
-            jovenes_mayores: ["¿1.Tengo cambios de ánimo fuertes?", "¿2.Me siento desconectado(a)?", "¿3.Ya no disfruto actividades?", "¿4.Me siento abrumado(a)?", "¿5.Prefiero estar solo(a)?", "¿6.Siento que no tengo a quién acudir?", "¿7.Me cuesta confiar en otros?", "¿8.He perdido interés en mis estudios?", "¿9.Me cuesta concentrarme?", "¿10.Me siento presionado(a)?", "¿11.Siento que en casa no me entienden?", "¿12.Evito hablar de mis emociones?", "¿13.Me siento tenso(a) en mi hogar?", "¿14.Me cuesta expresar lo que siento?", "¿15.Me irrito con facilidad?", "¿16.He cambiado mis hábitos de sueño o alimentación?"],
-            adulto: ["¿1.Presento cambios de ánimo drásticos o irritabilidad sin causa aparente?", "¿2.Me siento abrumado(a) por las responsabilidades diarias?", "¿3.He perdido el interés por actividades que antes disfrutaba?", "¿4.Me siento desconectado(a) de mis propias emociones o del entorno?", "¿5.Tiendo a aislarme y evitar el contacto con amigos o colegas?", "¿6.Siento que no cuento con una red de apoyo confiable en momentos críticos?", "¿7.Me cuesta confiar en las intenciones de los demás?", "¿8.Me cuesta concentrarme o tomar decisiones en mis tareas principales?", "¿9.Siento que mi productividad o rendimiento ha disminuido notablemente?", "¿10.Me siento bajo una presión constante que no logro gestionar?", "¿11.Siento que en mi entorno familiar no comprenden mi situación actual?", "¿12.Evito comunicar mis preocupaciones económicas o personales en casa?", "¿13.Percibo un ambiente de tensión o conflicto constante en mi hogar?", "¿14.Presento dificultades significativas para conciliar el sueño o cambios en mi apetito?", "¿15.Me cuesta controlar impulsos o reacciones de enojo?", "¿16.Siento una fatiga persistente o falta de energía vital?"]
+            jovenes_menores: ["¿Me siento triste sin saber por qué?", "¿Me enojo con facilidad?", "¿Me siento sin energía?", "¿Siento que nada me sale bien?", "¿Me siento excluido(a)?", "¿Evito hablar con mis compañeros?", "¿Me cuesta hacer amigos?", "¿Siento que no encajo?", "¿Me cuesta concentrarme?", "¿Mis notas han bajado?", "¿Me siento nervioso(a) en la escuela?", "¿En casa puedo hablar de mis problemas?", "¿Siento que mis emociones molestan?", "¿Me siento solo(a) incluso acompañado(a)?", "¿He tenido cambios en mis ganas de comer o dormir?"],
+            jovenes_mayores: ["¿Tengo cambios de ánimo fuertes?", "¿Me siento desconectado(a)?", "¿Ya no disfruto actividades?", "¿Me siento abrumado(a)?", "¿Prefiero estar solo(a)?", "¿Siento que no tengo a quién acudir?", "¿Me cuesta confiar en otros?", "¿He perdido interés en mis estudios?", "¿Me cuesta concentrarme?", "¿Me siento presionado(a)?", "¿Siento que en casa no me entienden?", "¿Evito hablar de mis emociones?", "¿Me siento tenso(a) en mi hogar?", "¿Me cuesta expresar lo que siento?", "¿Me irrito con facilidad?", "¿He cambiado mis hábitos de sueño o alimentación?"],
+            adulto: ["¿Presento cambios de ánimo drásticos o irritabilidad sin causa aparente?", "¿Me siento abrumado(a) por las responsabilidades diarias?", "¿He perdido el interés por actividades que antes disfrutaba?", "¿Me siento desconectado(a) de mis propias emociones o del entorno?", "¿Tiendo a aislarme y evitar el contacto con amigos o colegas?", "¿Siento que no cuento con una red de apoyo confiable en momentos críticos?", "¿Me cuesta confiar en las intenciones de los demás?", "¿Me cuesta concentrarme o tomar decisiones en mis tareas principales?", "¿Siento que mi productividad o rendimiento ha disminuido notablemente?", "¿Me siento bajo una presión constante que no logro gestionar?", "¿Siento que en mi entorno familiar no comprenden mi situación actual?", "¿Evito comunicar mis preocupaciones económicas o personales en casa?", "¿Percibo un ambiente de tensión o conflicto constante en mi hogar?", "¿Presento dificultades significativas para conciliar el sueño o cambios en mi apetito?", "¿Me cuesta controlar impulsos o reacciones de enojo?", "¿Siento una fatiga persistente o falta de energía vital?"]
         };
 
-        let encuesta = { nombre: "", cedula: "", edad: 0, condicionOcupacion: "", territorio: "", sector: "", respuestas: [], index: 0, preguntas: [] };
+        let encuesta = { nombre: "", cedula: "", edad: 0, condicion: "", territorio: "", sector: "", respuestas: [], index: 0, preguntas: [] };
+
+        const WEB_APP_URL = "PEGAR_AQUI_TU_URL_DE_APPS_SCRIPT";
 
         function iniciarRegistro() {
             document.getElementById('splash').classList.add('hidden');
             document.getElementById('registro').classList.remove('hidden');
         }
 
-        // LÓGICA DINÁMICA DE CAMPOS SEGÚN LA EDAD
         function actualizarCamposCondicionales() {
             const edad = parseInt(document.getElementById('reg-edad').value);
             const contenedor = document.getElementById('contenedor-condicional');
-            
             if (edad >= 12 && edad <= 17) {
-                contenedor.innerHTML = `
-                    <select id="reg-condicion" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">
-                        <option value="">¿Es estudiante?</option>
-                        <option value="Estudiante">Sí, soy estudiante</option>
-                        <option value="No estudiante">No estudio actualmente</option>
-                    </select>`;
+                contenedor.innerHTML = `<select id="reg-condicion" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50 text-[#0D2A47]">
+                    <option value="">¿Es estudiante?</option>
+                    <option value="Estudiante">Sí, estudio</option>
+                    <option value="No estudiante">No estudio</option>
+                </select>`;
             } else if (edad >= 18) {
-                contenedor.innerHTML = `
-                    <input type="text" id="reg-condicion" placeholder="Profesión u Oficio" class="w-full border-2 border-gray-200 rounded-xl p-3 outline-none focus:border-[#d4af37]">`;
-            } else {
-                contenedor.innerHTML = "";
-            }
+                contenedor.innerHTML = `<input type="text" id="reg-condicion" placeholder="Profesión u Oficio" class="w-full border-2 border-gray-100 rounded-xl p-3 outline-none focus:border-[#EB7524] bg-gray-50 text-[#0D2A47]">`;
+            } else { contenedor.innerHTML = ""; }
         }
 
         function cargarSectores() {
@@ -130,13 +166,9 @@
             const combo = document.getElementById('reg-sector');
             combo.innerHTML = '<option value="">Seleccione Sector...</option>';
             if (sectoresData[terr]) {
-                sectoresData[terr].forEach(s => {
-                    combo.innerHTML += `<option value="${s}">${s}</option>`;
-                });
+                sectoresData[terr].forEach(s => combo.innerHTML += `<option value="${s}">${s}</option>`);
                 combo.disabled = false;
-            } else {
-                combo.disabled = true;
-            }
+            } else { combo.disabled = true; }
         }
 
         function empezarEncuesta() {
@@ -145,21 +177,15 @@
             encuesta.edad = parseInt(document.getElementById('reg-edad').value);
             encuesta.territorio = document.getElementById('reg-territorio').value;
             encuesta.sector = document.getElementById('reg-sector').value;
-            
-            const campoCondicion = document.getElementById('reg-condicion');
-            encuesta.condicionOcupacion = campoCondicion ? campoCondicion.value : "";
+            encuesta.condicion = document.getElementById('reg-condicion')?.value || "";
 
-            if (!encuesta.nombre || !encuesta.cedula || !encuesta.edad || !encuesta.sector || !encuesta.condicionOcupacion) {
-                return alert("Por favor, complete todos los campos.");
+            if (!encuesta.nombre || !encuesta.cedula || !encuesta.edad || !encuesta.sector || !encuesta.condicion) {
+                return alert("Complete todos los campos del registro.");
             }
 
-            if (encuesta.edad >= 12 && encuesta.edad <= 14) {
-                encuesta.preguntas = preguntasSets.jovenes_menores;
-            } else if (encuesta.edad >= 15 && encuesta.edad <= 17) {
-                encuesta.preguntas = preguntasSets.jovenes_mayores;
-            } else {
-                encuesta.preguntas = preguntasSets.adulto;
-            }
+            if (encuesta.edad <= 14) encuesta.preguntas = preguntasSets.jovenes_menores;
+            else if (encuesta.edad <= 17) encuesta.preguntas = preguntasSets.jovenes_mayores;
+            else encuesta.preguntas = preguntasSets.adulto;
 
             document.getElementById('registro').classList.add('hidden');
             document.getElementById('encuesta').classList.remove('hidden');
@@ -167,13 +193,12 @@
         }
 
         function renderizarPregunta() {
-            const container = document.getElementById('encuesta');
             const index = encuesta.index;
             const total = encuesta.preguntas.length;
             const maxEscala = encuesta.edad < 15 ? 4 : 5;
+            const container = document.getElementById('encuesta');
 
-            container.className = `w-full max-w-lg rounded-3xl p-6 shadow-2xl text-[#001f3f] transition-colors duration-500 ${(index + 1) % 2 === 0 ? 'bg-pregunta-par' : 'bg-pregunta-impar'}`;
-            
+            container.className = `w-full max-w-lg rounded-3xl p-6 shadow-2xl transition-all duration-500 ${(index + 1) % 2 === 0 ? 'bg-pregunta-par' : 'bg-pregunta-impar'}`;
             document.getElementById('nro-pregunta').innerText = `Pregunta ${index + 1} de ${total}`;
             document.getElementById('texto-pregunta').innerText = encuesta.preguntas[index];
             document.getElementById('label-siempre').innerText = `${maxEscala} Siempre`;
@@ -184,9 +209,8 @@
                 escalaDiv.innerHTML += `
                     <div class="flex flex-col items-center">
                         <input type="radio" name="p" id="r${i}" value="${i}" class="hidden radio-btn" ${encuesta.respuestas[index] == i ? 'checked' : ''}>
-                        <label for="r${i}" class="w-12 h-12 border-2 border-[#001f3f] rounded-full flex items-center justify-center font-bold cursor-pointer hover:bg-[#001f3f] hover:text-white transition-colors shadow-sm">${i}</label>
-                    </div>
-                `;
+                        <label for="r${i}" class="w-12 h-12 border-2 border-white/50 rounded-full flex items-center justify-center font-bold cursor-pointer hover:bg-white/20 shadow-lg">${i}</label>
+                    </div>`;
             }
             document.getElementById('btn-anterior').classList.toggle('hidden', index === 0);
             const esUltima = index === total - 1;
@@ -196,32 +220,42 @@
 
         function proximaPregunta() {
             const seleccion = document.querySelector('input[name="p"]:checked');
-            if (!seleccion) return alert("Por favor seleccione una opción.");
+            if (!seleccion) return alert("Seleccione una opción.");
             encuesta.respuestas[encuesta.index] = seleccion.value;
 
             if (encuesta.index < encuesta.preguntas.length - 1) {
                 encuesta.index++;
                 renderizarPregunta();
             } else {
-                if (!document.getElementById('comentario-final').value.trim()) return alert("El comentario final es obligatorio.");
+                if (!document.getElementById('comentario-final').value.trim()) return alert("El comentario final es requerido.");
                 enviar();
             }
         }
 
         function preguntaAnterior() {
-            if (encuesta.index > 0) {
-                encuesta.index--;
-                renderizarPregunta();
-            }
+            if (encuesta.index > 0) { encuesta.index--; renderizarPregunta(); }
         }
 
         function enviar() {
-            encuesta.comentario = document.getElementById('comentario-final').value.trim();
+            const payload = {
+                nombre: encuesta.nombre,
+                cedula: encuesta.cedula,
+                edad: encuesta.edad,
+                condicion: encuesta.condicion,
+                territorio: encuesta.territorio,
+                sector: encuesta.sector,
+                respuestas: encuesta.respuestas,
+                comentario: document.getElementById('comentario-final').value.trim()
+            };
+
             document.getElementById('encuesta').classList.add('hidden');
             document.getElementById('gracias').classList.remove('hidden');
-            
-            // LOG PARA VER LOS DATOS CONSOLIDADOS (ESTO IRÁ AL EXCEL)
-            console.log("HDC 2026 - Datos Listos:", encuesta);
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload)
+            }).then(() => console.log("Datos enviados a HDC 1991")).catch(err => console.error(err));
         }
     </script>
 </body>
